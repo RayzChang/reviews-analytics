@@ -1,16 +1,17 @@
 import time
+import progressbar
 
 
 #讀取檔案
 def read_file(filename):
+    bar = progressbar.ProgressBar(max_value=1000000)
     data = []
     count = 0
     with open('reviews.txt', 'r') as f:
-    	for line in f:
-    		data.append(line)
-    		count += 1
-    		if count % 1000 == 0:
-    		    print(len(data))
+        for line in f:
+            data.append(line)
+            count += 1
+            bar.update(count)
     print('檔案讀取完畢,總共有', len(data), '筆資料')
     return data 
 
@@ -42,13 +43,17 @@ def count(data):
 def word_count(data):
     start_time = time.time()
     wc = {}
-    for d in data:
+    print('開始統計每個字出現的次數...')
+    bar = progressbar.ProgressBar(max_value=len(data))
+
+    for i, d in enumerate(data):
         words = d.split() #如果沒有填入資訊 預設就是以空白鍵做刪除
         for word in words:
             if word in wc:
                 wc[word] += 1
             else:
                 wc[word] = 1 #新增新的key進wc字典
+        bar.update(i + 1)
 
     #列印出現超過100萬次的字
     for word in wc:
