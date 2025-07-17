@@ -1,3 +1,6 @@
+import time
+
+
 #讀取檔案
 def read_file(filename):
     data = []
@@ -37,6 +40,7 @@ def count(data):
 
 #新增字典，將字串切割後裝入字典內
 def word_count(data):
+    start_time = time.time()
     wc = {}
     for d in data:
         words = d.split() #如果沒有填入資訊 預設就是以空白鍵做刪除
@@ -49,8 +53,9 @@ def word_count(data):
     #列印出現超過100萬次的字
     for word in wc:
         if wc[word] > 1000000:
-            print(word, wc[word])
-
+            print('出現超過一百萬次以上的字為:', word, wc[word])
+    end_time = time.time()
+    print('讀取共', end_time - start_time, '秒')
     print('總共有: ', len(wc), '個字存入字典')
     return wc
 
